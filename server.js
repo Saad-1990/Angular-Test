@@ -26,7 +26,7 @@ const app = express();
  // |____ ../Server
  // |________ ../Server/routes
  // |________ ../Server/routes/api.js
-const api = require('./server/routes/api');
+const api = require('./server/routes/api');  
 
 
 // Parsers
