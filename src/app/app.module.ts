@@ -3,16 +3,23 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
+import { FarmanComponent } from './farman/farman.component';
+
+// Import the Http Module and our Data Service
+import { HttpModule } from '@angular/http';
+import { TestService } from './test.service';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FarmanComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpModule
   ],
-  providers: [],
+  providers: [TestService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
