@@ -38,11 +38,6 @@ jQuery(document).ready(function($){
 			triggerAnimation( formPopup.find('.selected-table'), coverLayer, false);
 		});
 
-		//on resize - update form position/size
-		$(window).on('resize', function(){
-			requestAnimationFrame(updateForm);
-		});
-
 		//show/hide credit card fields if user selected credit card as gateway
 		$('.cd-payment-gateways').on('change', function(){
 			($('#card').is(':checked')) 
@@ -63,49 +58,40 @@ jQuery(document).ready(function($){
 	function animateForm(table, animationType) {
 		animating = true;
 
-		var tableWidth = table.width(),
-			tableHeight = table.height(),
-			tableTop = table.offset().top - $(window).scrollTop(),
-			tableLeft = table.offset().left,
-			form = $('.cd-form'),
-			formPlan = form.find(),
-			formFinalWidth = formWidth(),
-			formFinalHeight = formHeight(),
-			formTopValue = formTop(formFinalHeight),
-			formLeftValue = formLeft(formFinalWidth),
-			formTranslateY = tableTop - formTopValue,
-			formTranslateX = tableLeft - formLeftValue
+		var form = $('.cd-form'),
+			formPlan = form.find()
 
 		if( animationType ) {//open the form
 
+			formPlan.html(table.html());
 
-			//animate popout form - set initial width, hight and position - then animate them to their final values
+            //animate popout form - set initial width, hight and position - then animate them to their final values
 			form.velocity(
 			{
                 'width': '50px',
                 'height': '50px',
-				'right': '10px',
-				'bottom': '10px',
+				'right': '30px',
+				'bottom': '30px',
 				'translateX': '0px',
-				'translateY': '	0px',
+				'translateY': '0px',
 				'opacity': 1,
-                'border-radius': '50%',
-			}, 50, function(){
+			}, 100, function(){
+				table.addClass('empty-box');
 
 				form.velocity(
 				{
-                    'width': '350px',
+                    'width': '320px',
                     'height': '400px',
-                    'right': '30px',
-                    'bottom': '30px',
+                    'right': '0',
+                    'bottom': '0',
                     'translateX': '0px',
                     'translateY': '0px',
-                    'border-radius': '0px',
-				}, animationDuration, [ 200, 20 ], function(){
+                    'opacity': 1,
+				}, animationDuration, [ 400, 0 ], function(){
 					animating = false;
 					setTimeout(function(){
 						form.children('form').addClass('is-scrollable');
-					}, 200);
+					}, 100);
 				}).addClass('is-visible');
 
 			});
@@ -115,37 +101,41 @@ jQuery(document).ready(function($){
 			//animate plan info inside the form to its final dimension
 			formPlan.velocity(
 			{
-				'width': tableWidth+'px',
+                'width': '50px',
+                'height': '50px',
+                'right': '10px',
+                'bottom': '10px',
+                'translateX': '0px',
+                'translateY': '0px',
+                'opacity': 1,
 			}, {
 				duration: backAnimationDuration,
-				easing: "easeOutCubic",
-				delay: delay
+				easing: "easeInCubic",
+				delay: '100',
 			});
 
 			//animate form to its final dimention/position
 			form.velocity(
 			{
-				'width': tableWidth+'px',
-				'height': tableHeight+'px',
-				'translateX': formTranslateX+'px',
-				'translateY': formTranslateY+'px',
+                'width': '80px',
+                'height': '80px',
+                'right': '30px',
+                'bottom': '30px',
+                'opacity': '0',
 			}, {
 				duration: backAnimationDuration,
 				easing: "easeOutCubic",
-				delay: delay,
+				delay: '100',
 				complete: function(){
 					table.removeClass('empty-box');
 					form.velocity({
-						'translateX': 0,
-						'translateY': 0,
-						'opacity' : 0,
-					}, 0).find('form').scrollTop(0);
+                        'translateX': '0px',
+                        'translateY': '0px',
+					}, 100).find('form').scrollTop(0);
 					animating = false;
 				}
 			}).removeClass('is-visible');
 
-			//target browsers not supporting transitions
-			if($('.no-csstransitions').length > 0 ) table.removeClass('empty-box');
 		}
 	}
 
