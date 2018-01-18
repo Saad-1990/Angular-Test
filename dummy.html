@@ -1,103 +1,74 @@
 <!doctype html>
-<html>
-    <head>
-        <title>Socket.IO chat</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-        <link rel="stylesheet" href="/css/styles.css">
-        <style>
-        * { margin: 0; padding: 0; border-radius:0 !important;}
-        body { font: 13px Helvetica, Arial; }
-        #chatArea {width:100%; position: absolute; bottom: 0;}
-        form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-        #messages { list-style-type: none; margin: 0; padding: 0; }
-        #messages li { padding: 5px 10px; }
-        #messages li:nth-child(odd) { background: #eee; }
-        #addQuestion{
-            background-color: #C5C9B8;
-            width: 600px;
-            height: 500px;
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            top: 0;
-            right: 0;
-            margin: auto;
-        }
-        </style>
-        <script  src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-                crossorigin="anonymous">    
-        </script>
-        
-   </head>
-    <body>
-        <!--                                    LOGIN FORM                      !-->
-        <div class="container" id="addQuestion">
-            <div class="row">
-                <div class="col-sm-8">
-                    <form>
-                    <div class="form-group">
-                        <label for="staticEmail" class="col-form-label">Email</label>
-                        <input type="text" class="form-control" id="inputEmail" placeholder="email@example.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="staticUserName" class="col-form-label">User Name</label>
-                        <input type="text"  class="form-control" id="inputUserName" placeholder="email@example.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="inputPassword" class="col-form-label">Password</label>
-                        <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                            <label for="btnRegister" class="col-form-label">Register</label>
-                            <button id="btnRegister" class="btn btn-block btn-primary" type="button">Iniate Chat</button>
-                        </div>
-                    </form>
-                </div>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chat Window</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,600' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="/css/reset.css"> <!-- CSS reset -->
+    <link rel="stylesheet" href="/css/chat-popup.css"> <!-- Resource style -->
+
+    <script src="/js/jquery-2.1.4.js"></script>
+
+    <script src="/js/main.js"></script>
+    <script src="/js/modernizr.js"></script>
+    <script src="/js/velocity.min.js"></script>
+
+</head>
+<body>
+
+<ul class="cd-pricing">
+    <div>
+        <footer class="cd-pricing-footer">
+            <a href="#0"><i class="fa fa-comments" aria-hidden="true"></i></a>
+            <div id="signals">
+                <span class="signal s1"></span>
+                <span class="signal s2"></span>
+                <span class="signal s3"></span>
             </div>
-            <!--                                  END LOGIN FORM                      !-->
-            <div class="row">
-                <ul id="messages"></ul>
-                <form action="" id=chatArea class="">
-                    <div class="input-group">
-                            <input id="m" autocomplete="off" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
-                        <div class="input-group-prepend">
-                            <button class="btn btn-block btn-primary" type="button">Send</button>
-                        </div>
-                    </div>
-                </form>
+        </footer> <!-- .cd-pricing-footer -->
+    </div>
+</ul> <!-- .cd-pricing -->
+
+<div class="cd-form">
+
+    <form action="">
+        <fieldset>
+            <legend>Fill Your Info</legend>
+
+            <div class="full-width">
+                <label for="userName">Name</label>
+                <input type="text" id="userName" name="userName">
             </div>
 
-        </div>
-    </body>
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-        var initiated = false;
-        $('#btnRegister').on('click',function(event){
-            console.log('clicked');
-            var password = $('#inputPassword').val();
-            var username = $('#inputUserName').val();
-            var email    = $('#inputEmail').val();
-            if(password && username && email)
-            {
-                var socket = io.connect('',{
-                    query : 'username=' + username + '&password=' + password +'&email=' + email 
-                });
-            }
-            else {
-                console.log('Invalid Credintials!!!!!!');
-            }
-            event.preventDefault();
-        });
-        // $(function () {
-        //     var socket = io.connect('');
-        //     $('form').submit(function(){
-        //         socket.emit('message', $('#m').val());
-        //         $('#m').val('');
-        //         return false;
-        //     });
-        //     socket.on('message', function(msg){
-        //         $('#messages').append($('<li>').text(msg));
-        //     });
-        // });
-    </script>
+            <div class="full-width">
+                <label for="userEmail">Email</label>
+                <input type="email" id="userEmail" name="userEmail">
+            </div>
+
+            <div class="full-width">
+                <label for="userPhone">Password</label>
+                <input type="tel" id="userPhone" name="userPhone">
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <div>
+                <input type="submit"  value="Get started">
+            </div>
+        </fieldset>
+    </form>
+
+    <a href="#0" class="cd-close"></a>
+</div> <!-- .cd-form -->
+
+<div class="cd-overlay"></div> <!-- shadow layer -->
+<script src="js/jquery-2.1.4.js"></script>
+<script src="js/velocity.min.js"></script>
+<script src="js/main.js"></script> <!-- Resource jQuery -->
+</body>
 </html>
